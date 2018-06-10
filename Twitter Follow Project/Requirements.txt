@@ -13,3 +13,11 @@
 
 # Make sure that the tokens aren't pushed to github
 
+
+New ideas:
+    research accounts that can compile data together
+    Research account tasks:
+        1. Follower mining list - compile a list of 2000
+        2. Filter out people with less than 150 followers
+        3. Upload data to a pandas database with the final list and date followed
+
