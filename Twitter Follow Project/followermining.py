@@ -2,12 +2,12 @@
 import tweepy
 import time
 import random
-from config import consumer_key, consumer_secret, access_token, access_token_secret
+from config import consumer_key_1, consumer_secret_1, access_token_1, access_token_secret_1
 
 # Authorizations for tweepy
-auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-auth.set_access_token(access_token, access_token_secret)
-api = tweepy.API(auth)
+auth1 = tweepy.OAuthHandler(consumer_key_1, consumer_secret_1)
+auth1.set_access_token(access_token_1, access_token_secret_1)
+api = tweepy.API(auth1)
 
 # Methods
 def follower_mine():
@@ -15,28 +15,24 @@ def follower_mine():
     count = 0
     for user in users:
         # Checks if followed previously
-        with open("followed.txt.", "a") as followedFile:
-            with open("followed.txt.", "r") as followedFileRead:
-                if (user.screen_name in followedFileRead):
-                    print("Duplicate, skipping")
-                    continue
-                # followedFileRead closing
+        with open("followed.txt.", "r") as followedFileRead:
+            if (user.screen_name in followedFileRead):
+                print("Duplicate, skipping")
+                continue
+            # followedFileRead closing
 
-            # Follows and writes to followed doc provided previous conditions are met
-            followedFile.write(user.screen_name + "\n")
-            count += 1
+        # Follows and writes to followed doc provided previous conditions are met
+        with open("prelim.txt", "a") as prelim:
+            prelim.write(user.screen_name + "\n")
+        
+        count += 1
 
-            # Pauses for random amount of time (between 0 and 1s) in between each follow
-            time.sleep(0.1 * random.randint(1, 10))
+        # Pauses for random amount of time (between 0 and 1s) in between each follow
+        #time.sleep(0.1 * random.randint(1, 10))
 
-            # Waits every 100 users for 10 seconds
-            if (count % 100 == 0):
-                print("Batch completed")
-                time.sleep(10)
-
-            # Stops after 1000 follows -- can set to anything you want
-            if (count == 1000):
-                break
+        # Stops after 1000 follows -- can set to anything you want
+        if (count == 2000):
+            break
 
     print("Finished following 1000 people")
 
