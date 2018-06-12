@@ -11,18 +11,18 @@ api = tweepy.API(auth1)
 
 # Methods
 def follower_mine():
-    users = tweepy.Cursor(api.followers, screen_name="IBMBlockchain", count = 50).items()
+    users = tweepy.Cursor(api.followers, screen_name="machinelearnflx", count = 50).items()
     count = 0
     for user in users:
         # Checks if followed previously
-        with open("followed.txt.", "r") as followedFileRead:
+        with open("TextFiles/followed.txt.", "r") as followedFileRead:
             if (user.screen_name in followedFileRead):
                 print("Duplicate, skipping")
                 continue
             # followedFileRead closing
 
         # Follows and writes to followed doc provided previous conditions are met
-        with open("prelim.txt", "a") as prelim:
+        with open("TextFiles/prelim.txt", "a") as prelim:
             prelim.write(user.screen_name + "\n")
         
         count += 1
@@ -34,32 +34,8 @@ def follower_mine():
         if (count == 2000):
             break
 
-    print("Finished following 1000 people")
+    print("Finished getting 2000 people")
 
-def get_my_friends():
-    f = open("followed.txt", "w")
-    f.close()
-    print("Getting friends\n")
-    count = 0
-    users = tweepy.Cursor(api.friends).items()
-    for user in users:
-        with open("followed.txt", "a") as followedFile:
-            followedFile.write(user.screen_name + "\n")
-            count += 1
-            if (count % 100 == 0):
-                break
-
-def remove_non_followers():
-    count = 0
-    friends = tweepy.Cursor(api.friends).items()
-    followers = tweepy.Cursor(api.followers).items()
-    for f in friends:
-        if f not in followers:
-            api.destroy_friendship(f)
-            count += 1
-            if (count == 1000):
-                break
-    print("Removed " + str(count) + "nonfollowers")
 
 
 # Code to run
